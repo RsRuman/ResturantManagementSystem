@@ -1,81 +1,37 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<x-rms-layout>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
-
-                {{--   Login with github  --}}
-                <div class="social">
-                    <a href="/auth/github" class="inline-flex text-center items-center px-4 py-2 bg-gray-800 border border-transparent
-                    rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
-                    active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300
-                    disabled:opacity-25 transition ease-in-out duration-150 ml-3">Github</a>
-                </div>
-
-                {{--   Login with facebook  --}}
-                <div class="social">
-                    <a href="/auth/facebook" class="inline-flex text-center items-center px-4 py-2 bg-gray-800 border border-transparent
-                rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
-                active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300
-                disabled:opacity-25 transition ease-in-out duration-150 ml-3">Facebook</a>
-                </div>
-
-                    {{--   Login with google  --}}
-                    <div class="social">
-                        <a href="/auth/google" class="inline-flex text-center items-center px-4 py-2 bg-gray-800 border border-transparent
-                rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
-                active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300
-                disabled:opacity-25 transition ease-in-out duration-150 ml-3">Google</a>
+        <div class="pt-52 row">
+            <div class="col col px-20">
+                <h3 class="text-4xl mb-10">Returning Customer</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="email" class="form-control h-12 fs-label rounded" name="email" id="email"
+                               aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
-
+                    <div class="form-group mb-3">
+                        <input type="password" class="form-control h-12 fs-label rounded" name="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="form-check float-right">
+                        <input type="checkbox" class="form-check-input" value="" id="check">
+                        <label class="form-check-label fs-label" for="check">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn w-1/5 mb-5 text-white submit-button">Submit</button>
+                </form>
             </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+            <div class="col border-l-2 col px-20">
+                <h3 class=" text-4xl mb-10">New Customer</h3>
+                <div>
+                    <p class="text-bold font-serif text-2xl">Save Time Now</p>
+                    <p class="mb-3 font-serif">You don't need an account to checkout.</p>
+                    <a href="#" class="bg-white border border-2 btn customBtn text-lg text-black w-1/2">Continue As Guest</a>
+                </div>
+                <div class="mt-16">
+                    <p class="text-bold font-serif text-2xl">Save Time later</p>
+                    <p class="mb-3 font-serif">Create an account for fast checkout and easy access to order history.</p>
+                    <a href="#" class="bg-white border border-2 btn customBtn text-lg text-black w-1/2">Create Account</a>
+                </div>
+            </div>
+        </div>
+
+</x-rms-layout>
