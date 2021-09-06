@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\SocialLogin\FacebookLoginController;
 use App\Http\Controllers\SocialLogin\GithubLoginController;
+use App\Http\Controllers\SocialLogin\GoogleLoginController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 
 
@@ -24,4 +24,8 @@ Route::get('/auth/github/callback', [GithubLoginController::class, 'handleProvid
 //Facebook login
 Route::get('/auth/facebook', [FacebookLoginController::class, 'redirectToProvider']);
 Route::get('/auth/facebook/callback', [FacebookLoginController::class, 'handleProviderCallback']);
+
+//Facebook login
+Route::get('/auth/google', [GoogleLoginController::class, 'redirectToProvider']);
+Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleProviderCallback']);
 
