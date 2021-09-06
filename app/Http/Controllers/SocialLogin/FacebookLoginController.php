@@ -10,32 +10,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-class GithubLoginController extends Controller
+class FacebookLoginController extends Controller
 {
     public function redirectToProvider(): \Symfony\Component\HttpFoundation\RedirectResponse
     {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver('facebook')->redirect();
     }
 
     public function handleProviderCallback(){
 
-        $gitUser = Socialite::driver('github')->user();
-        $user = User::where('uid', $gitUser->getId())->first();
+        $facebookUser = Socialite::driver('facebook')->user();
+        $user = User::where('uid', $facebookUser->getId())->first();
 
         if (!$user){
             $user = User::create([
-                'uid' => $gitUser->getId(),
-                'name' => $gitUser->getName(),
-                'nick_name' => $gitUser->getNickname(),
-                'email' => $gitUser->getEmail(),
-                'avatar' =>  $gitUser->getAvatar(),
+                'uid' => $facebookUser->getId(),
+                'name' => $facebookUser->getName(),
+                'nick_name' => $facebookUser->getNickname(),
+                'email' => $facebookUser->getEmail(),
+                'avatar' => $facebookUser->getAvatar()
             ]);
-            event(new Registered($user));
         }
 
+        event(new Registered($user));
         Auth::login($user);
         return redirect(RouteServiceProvider::HOME);
-
-
     }
 }

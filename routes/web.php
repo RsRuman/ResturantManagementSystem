@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SocialLogin\FacebookLoginController;
 use App\Http\Controllers\SocialLogin\GithubLoginController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -17,6 +18,10 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 //Github login
-Route::get('/auth/redirect', [GithubLoginController::class, 'redirectToProvider']);
-Route::get('/auth/callback', [GithubLoginController::class, 'handleProviderCallback']);
+Route::get('/auth/github', [GithubLoginController::class, 'redirectToProvider']);
+Route::get('/auth/github/callback', [GithubLoginController::class, 'handleProviderCallback']);
+
+//Facebook login
+Route::get('/auth/facebook', [FacebookLoginController::class, 'redirectToProvider']);
+Route::get('/auth/facebook/callback', [FacebookLoginController::class, 'handleProviderCallback']);
 
