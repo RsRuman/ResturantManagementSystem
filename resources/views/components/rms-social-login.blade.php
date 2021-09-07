@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="col">
-        <p class="fs-label">Login With Social</p>
-        <div class="bootstrap-icon ml-3 p-1.5">
-            <a href="/auth/facebook"><i class="bi bi-facebook text-2xl" style="color:blue"></i></a>
+    <div class="col mt-5">
+        <p>Login With Social</p>
 
-            <a href="/auth/github"><i class="bi bi-github text-2xl" style="color:gray"></i></a>
-            <a href="/auth/google"><i class="bi bi-google text-2xl" style="color:darkgreen"></i></a>
-        </div>
+        <ul class="list-inline f-social">
+            <li class="list-inline-item"><a href="/auth/facebook"><i class="fa fa-facebook" aria-hidden="true" style="font-size: 18px; color: white; height: 38px; width: 38px; display: block;text-align: center;line-height: 38px; background: #d65106; border-radius: 4px;"></i></a></li>
+            <li class="list-inline-item"><a href="/auth/github"><i class="fa fa-github" aria-hidden="true" style="font-size: 18px; color: white; height: 38px; width: 38px; display: block; text-align: center;line-height: 38px; background: #d65106; border-radius: 4px;"></i></a></li>
+            <li class="list-inline-item"><a href="/auth/google"><i class="fa fa-google" aria-hidden="true" style="font-size: 18px; color: white; height: 38px; width: 38px; display: block; text-align: center;line-height: 38px; background: #d65106; border-radius: 4px;"></i></a></li>
+        </ul>
     </div>
 </div>
