@@ -1,66 +1,57 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<x-rms-layout>
+    <div class="pt-40 row">
+        <div class="col col px-20">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+            <h3 class="text-4xl mb-10">Create Account</h3>
 
-        <form method="POST" action="{{ route('register') }}">
+            <!-- Validation Errors -->
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+            <!-- Login Form -->
+            <form method="POST" action="{{ route('register') }}">
             @csrf
-
             <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control h-12 fs-label rounded" name="name" id="name"
+                           placeholder="Name" value="{{ old('name') }}" required autofocus>
+                </div>
+                <!-- Nick Name -->
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control h-12 fs-label rounded" name="nick_name" id="nick_name"
+                           placeholder="Nick Name" value="{{ old('nick_name') }}" required autofocus>
+                </div>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
+                <!-- Email -->
+                <div class="form-group mb-3">
+                    <input type="email" class="form-control h-12 fs-label rounded" name="email" id="email"
+                           aria-describedby="emailHelp" placeholder="Email" value="{{ old('email') }}" required autofocus>
+                </div>
 
-            <!-- Nick Name -->
-            <div>
-                <x-label for="nick_name" :value="__('Nick Name')" />
+                <!-- Password -->
+                <div class="form-group mb-3">
+                    <input type="password" class="form-control h-12 fs-label rounded" name="password" id="password" placeholder="Password"
+                           required autocomplete="current-password">
+                </div>
 
-                <x-input id="nick_name" class="block mt-1 w-full" type="text" name="nick_name" :value="old('nick_name')" required autofocus />
-            </div>
+                <!--Confirm Password -->
+                <div class="form-group mb-3">
+                    <input type="password" class="form-control h-12 fs-label rounded" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password" required autocomplete="current-password">
+                </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+                <button type="submit" class="btn mb-5 text-white submit-button">{{ __('Create Account') }}</button>
+                <p class="fs-label text-decoration:none float-right"><a href="{{ route('login') }}">Return To Login</a></p>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
+            </form>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+        </div>
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
+        <div class="col border-l-2 col px-20">
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+            <h3 class=" text-4xl mb-10">New Customer</h3>
+            <!-- New Customer Site Bar -->
+            <x-rms-new-register-customer/>
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
+        </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    </div>
+</x-rms-layout>
