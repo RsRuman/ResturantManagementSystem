@@ -10,24 +10,24 @@
             <div class="collapse navbar-collapse" id="navbars-rs-food">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('menu') }}">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                            <a class="dropdown-item" href="reservation.html">Reservation</a>
-                            <a class="dropdown-item" href="stuff.html">Stuff</a>
-                            <a class="dropdown-item" href="gallery.html">Gallery</a>
+                            <a class="dropdown-item" href="{{ route('reservation') }}">Reservation</a>
+                            <a class="dropdown-item" href="{{ route('stuff') }}">Stuff</a>
+                            <a class="dropdown-item" href="{{ route('gallery') }}">Gallery</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Blog</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                            <a class="dropdown-item" href="blog.html">blog</a>
-                            <a class="dropdown-item" href="blog-details.html">blog Single</a>
+                            <a class="dropdown-item" href="#">blog</a>
+                            <a class="dropdown-item" href="#">blog Single</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="/login" >Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="/register" >Register</a></li>
                 </ul>

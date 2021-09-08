@@ -27,6 +27,7 @@
 
 <x-rms-footer/>
 
+<a href="#" id="back-to-top" title="Back to top" style="display: none;"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
 <!-- ALL JS FILES -->
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/popper.min.js"></script>
