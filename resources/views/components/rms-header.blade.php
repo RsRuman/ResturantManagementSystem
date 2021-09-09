@@ -28,8 +28,32 @@
                         </div>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+                    @guest
                     <li class="nav-item"><a class="nav-link" href="/login" >Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="/register" >Register</a></li>
+                    @endguest
+
+                    @auth
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle" id="dropdown-a" data-toggle="dropdown"><i class="fa fa-user"></i> {{ auth()->user()->name }}</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                                <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                                    <!-- Authentication -->
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+
+                                        <x-dropdown-link :href="route('logout')"
+                                                         onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                            {{ __('Log Out') }}
+                                        </x-dropdown-link>
+                                    </form>
+                            </div>
+
+                        </li>
+                    @endauth
+
                 </ul>
             </div>
         </div>
