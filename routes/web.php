@@ -12,13 +12,15 @@ use App\Http\Controllers\SocialLogin\GoogleLoginController;
 use App\Http\Controllers\StuffController;
 use App\Models\Photo;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 
 
 Route::get('/', function () {
 
     return view('welcome',[
-        'photos' => Photo::latest()->where('status', 'activate')->get()
+        'photos' => Photo::latest()->where('status', 'activate')->get(),
+        'shortStory' => Storage::get('shortStory.txt'),
+        'shortQuote' => Storage::get('shortQuote.txt')
     ]);
 });
 
@@ -69,3 +71,9 @@ Route::get('/admin/slider-image-deactivate/{photo}', [AdminController::class, 's
 
 //Admin Slider Image Activate Route
 Route::get('/admin/slider-image-activate/{photo}', [AdminController::class, 'sliderImageActivate']);
+
+//Admin Slider Image Activate Route
+Route::post('/admin/live-dinner-restaurant-short-story', [AdminController::class, 'shortStory']);
+
+//Admin Slider Image Activate Route
+Route::post('/admin/live-dinner-restaurant-quote', [AdminController::class, 'shortQuote']);

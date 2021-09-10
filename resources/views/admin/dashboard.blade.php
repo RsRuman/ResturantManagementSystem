@@ -288,7 +288,33 @@
                             <button class="btn-block btn-primary p-2 rounded" type="submit">Upload</button>
 
                         </form>
+                        <br>
+
+                        <!-- About Section Text -->
+                        <h1 class="text-center">Update Short Story About Your Restaurant</h1>
+                        <div class="mb-3">
+                            <form action="/admin/live-dinner-restaurant-short-story" method="post">
+                                @csrf
+                                <label for="shortStory" class="form-label">Short Story</label>
+                                <textarea class="form-control" id="shortStory" name="shortStory" rows="3" placeholder="Write A Short Story About Your Live Dinner Restaurant!"></textarea>
+                                <button class="btn-block btn-primary p-2 rounded mt-3" type="submit">Submit</button>
+                            </form>
+                        </div>
+
+                        <!-- About Section Text -->
+                        <h1 class="text-center">Update Quote About Your Restaurant</h1>
+                        <div class="mb-3">
+                            <form action="/admin/live-dinner-restaurant-quote" method="post">
+                                @csrf
+                                <label for="shortQuote" class="form-label">Short Quote</label>
+                                <textarea class="form-control" id="shortQuote" name="shortQuote" rows="3" placeholder="Write A Short Quote About Your Live Dinner Restaurant!"></textarea>
+                                <button class="btn-block btn-primary p-2 rounded mt-3" type="submit">Submit</button>
+                            </form>
+                        </div>
+
                     </div>
+
+
 
                     <div class="col-lg-8 border-left-primary">
                         <h1 class="text-center border-bottom-success">Activate Slider Images</h1>

@@ -4,10 +4,10 @@
     <x-rms-slider :photos="$photos"></x-rms-slider>
 
     <!-- Start About -->
-    <x-rms-about-section-box></x-rms-about-section-box>
+    <x-rms-about-section-box :shortStory="$shortStory"></x-rms-about-section-box>
 
     <!-- Start QT -->
-    <x-rms-qt></x-rms-qt>
+    <x-rms-qt :shortQuote="$shortQuote"></x-rms-qt>
 
     <!-- Start Menu -->
     <x-rms-menu-box></x-rms-menu-box>
