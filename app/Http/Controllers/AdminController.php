@@ -9,7 +9,8 @@ class AdminController extends Controller
 {
     public function index(){
         return view('admin.dashboard',[
-            'photos' => Photo::latest()->get()
+            'activates' => Photo::latest()->where('status', 'activate')->get(),
+            'deactivates' => Photo::latest()->where('status', 'deactivate')->get()
         ]);
     }
 
@@ -22,8 +23,24 @@ class AdminController extends Controller
         Photo::create([
             'thumbnail' => $request->file('thumbnail')->store('sliders'),
             'type' => 'slider',
-            'status' => 'active'
+            'status' => 'activate'
         ]);
+
+        return redirect(route('adminDashboard'));
+    }
+
+    //    Slider Image Deactivate Function
+    public function sliderImageDeactivate(Photo $photo){
+
+            Photo::where('id', $photo->id)->update(['status' => 'deactivate']);
+
+            return redirect(route('adminDashboard'));
+    }
+
+    //    Slider Image activate Function
+    public function sliderImageActivate(Photo $photo){
+
+        Photo::where('id', $photo->id)->update(['status' => 'activate']);
 
         return redirect(route('adminDashboard'));
     }

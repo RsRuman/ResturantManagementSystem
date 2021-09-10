@@ -1,7 +1,7 @@
 <x-rms-layout>
 
     <!-- Start Slider -->
-    <x-rms-slider></x-rms-slider>
+    <x-rms-slider :photos="$photos"></x-rms-slider>
 
     <!-- Start About -->
     <x-rms-about-section-box></x-rms-about-section-box>

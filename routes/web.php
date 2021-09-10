@@ -10,12 +10,16 @@ use App\Http\Controllers\SocialLogin\FacebookLoginController;
 use App\Http\Controllers\SocialLogin\GithubLoginController;
 use App\Http\Controllers\SocialLogin\GoogleLoginController;
 use App\Http\Controllers\StuffController;
+use App\Models\Photo;
 use Illuminate\Support\Facades\Route;
 
 
 
 Route::get('/', function () {
-    return view('welcome');
+
+    return view('welcome',[
+        'photos' => Photo::latest()->where('status', 'activate')->get()
+    ]);
 });
 
 Route::get('/dashboard', function () {
@@ -59,3 +63,9 @@ Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('adminDa
 
 //Admin Slider Image Store Route
 Route::post('/admin/slider-image-store', [AdminController::class, 'sliderImageStore']);
+
+//Admin Slider Image Deactivate Route
+Route::get('/admin/slider-image-deactivate/{photo}', [AdminController::class, 'sliderImageDeactivate']);
+
+//Admin Slider Image Activate Route
+Route::get('/admin/slider-image-activate/{photo}', [AdminController::class, 'sliderImageActivate']);

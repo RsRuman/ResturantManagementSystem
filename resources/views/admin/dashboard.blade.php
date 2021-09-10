@@ -30,7 +30,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin</div>
+            <div class="sidebar-brand-text mx-3">RMS Admin</div>
         </a>
 
         <!-- Divider -->
@@ -238,7 +238,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">RS Ruman</span>
                             <img class="img-profile rounded-circle"
                                  src="img/undraw_profile.svg">
                         </a>
@@ -291,15 +291,28 @@
                     </div>
 
                     <div class="col-lg-8 border-left-primary">
-                        <h1 class="text-center border-bottom-primary">Previous Slider Images</h1>
+                        <h1 class="text-center border-bottom-success">Activate Slider Images</h1>
                         <div class="row">
 
-                            @foreach($photos as $photo)
-                            <div class="col">
-                                <img class="h-100 w-100 rounded" src="{{ asset('storage').'/'.$photo->thumbnail }}" alt="Imgaes" height="200" width="200">
+                            @foreach($activates as $activate)
+                            <div class="col-4 mb-5">
+                                <img class="h-100 w-100 rounded" src="{{ asset('storage').'/'.$activate->thumbnail }}" alt="Imgaes" height="200" width="200">
+                                <a href="/admin/slider-image-deactivate/{{ $activate->id }}" class="btn btn-success w-100">Deactivate</a>
                             </div>
                             @endforeach
                         </div>
+                        <br><br>
+                        <h1 class="text-center border-bottom-danger">Deactivate Slider Images</h1>
+                        <div class="row">
+
+                            @foreach($deactivates as $deactivate)
+                                <div class="col-4 mb-5">
+                                    <img class="h-100 w-100 rounded" src="{{ asset('storage').'/'.$deactivate->thumbnail }}" alt="Imgaes" height="200" width="200">
+                                    <a href="/admin/slider-image-activate/{{ $deactivate->id }}" class="btn btn-danger w-100">Activate</a>
+                                </div>
+                            @endforeach
+                        </div>
+                        <br><br>
                     </div>
 
                 </div>
@@ -313,7 +326,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Live Dinner restaurant 2021</span>
                     </div>
                 </div>
             </footer>
