@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FoodMenu;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ReservationController;
@@ -62,6 +63,9 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 //Admin Dashboard Route
 Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('adminDashboard');
+
+//Admin Food Menus Dashboard Route
+Route::get('/admin-dashboard/food-menus', [FoodMenu::class, 'index'])->name('foodMenus');
 
 //Admin Slider Image Store Route
 Route::post('/admin/slider-image-store', [AdminController::class, 'sliderImageStore']);

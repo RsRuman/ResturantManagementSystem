@@ -5,7 +5,7 @@
             <div class="col-lg-12">
                 <div class="heading-title text-center">
                     <h2>Special Menu</h2>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+                    <p>We Have Plenty Menu Items That You Might Enjoy </p>
                 </div>
             </div>
         </div>
@@ -13,16 +13,16 @@
         <div class="row inner-menu-box">
             <div class="col-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">All</a>
-                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Drinks</a>
-                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Lunch</</a>
-                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Dinner</a>
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-home" aria-selected="true">All</a>
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-drinks" role="tab" aria-controls="v-pills-profile" aria-selected="false">Drinks</a>
+                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-lunch" role="tab" aria-controls="v-pills-messages" aria-selected="false">Lunch</</a>
+                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-dinner" role="tab" aria-controls="v-pills-settings" aria-selected="false">Dinner</a>
                 </div>
             </div>
 
             <div class="col-9">
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-home-tab">
                         <div class="row">
                             <div class="col-lg-4 col-md-6 special-grid drinks">
                                 <div class="gallery-single fix">
@@ -125,7 +125,7 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="tab-pane fade" id="v-pills-drinks" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                         <div class="row">
                             <div class="col-lg-4 col-md-6 special-grid drinks">
                                 <div class="gallery-single fix">
@@ -162,7 +162,7 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div class="tab-pane fade" id="v-pills-lunch" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                         <div class="row">
                             <div class="col-lg-4 col-md-6 special-grid lunch">
                                 <div class="gallery-single fix">
@@ -198,7 +198,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <div class="tab-pane fade" id="v-pills-dinner" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                         <div class="row">
                             <div class="col-lg-4 col-md-6 special-grid dinner">
                                 <div class="gallery-single fix">

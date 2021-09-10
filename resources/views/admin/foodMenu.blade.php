@@ -63,7 +63,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
         <div id="content">
-            <!-- Topbar -->
+            <!-- Top bar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                 <!-- Sidebar Toggle (Top bar) -->
@@ -71,7 +71,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <!-- Topbar Search -->
+                <!-- Top bar Search -->
                 <form
                     class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
@@ -275,71 +275,6 @@
                 <!-- Content Row -->
                 <div class="row">
 
-                    <div class="col-lg-4">
-                        <h1 class="text-center">Update Slider Images</h1>
-                        <hr class="border-bottom-primary">
-
-                        <form action="/admin/slider-image-store" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="thumbnail" class="form-label">Upload A Slider Image</label>
-                                <input class="form-control" type="file" id="thumbnail" name="thumbnail">
-                            </div>
-                            <button class="btn-block btn-primary p-2 rounded" type="submit">Upload</button>
-
-                        </form>
-                        <br>
-
-                        <!-- About Section Text -->
-                        <h1 class="text-center">Update Short Story About Your Restaurant</h1>
-                        <div class="mb-3">
-                            <form action="/admin/live-dinner-restaurant-short-story" method="post">
-                                @csrf
-                                <label for="shortStory" class="form-label">Short Story</label>
-                                <textarea class="form-control" id="shortStory" name="shortStory" rows="3" placeholder="Write A Short Story About Your Live Dinner Restaurant!"></textarea>
-                                <button class="btn-block btn-primary p-2 rounded mt-3" type="submit">Submit</button>
-                            </form>
-                        </div>
-
-                        <!-- About Section Text -->
-                        <h1 class="text-center">Update Quote About Your Restaurant</h1>
-                        <div class="mb-3">
-                            <form action="/admin/live-dinner-restaurant-quote" method="post">
-                                @csrf
-                                <label for="shortQuote" class="form-label">Short Quote</label>
-                                <textarea class="form-control" id="shortQuote" name="shortQuote" rows="3" placeholder="Write A Short Quote About Your Live Dinner Restaurant!"></textarea>
-                                <button class="btn-block btn-primary p-2 rounded mt-3" type="submit">Submit</button>
-                            </form>
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="col-lg-8 border-left-primary">
-                        <h1 class="text-center border-bottom-success">Activate Slider Images</h1>
-                        <div class="row">
-
-                            @foreach($activates as $activate)
-                            <div class="col-4 mb-5">
-                                <img class="h-100 w-100 rounded" src="{{ asset('storage').'/'.$activate->thumbnail }}" alt="Imgaes" height="200" width="200">
-                                <a href="/admin/slider-image-deactivate/{{ $activate->id }}" class="btn btn-success w-100">Deactivate</a>
-                            </div>
-                            @endforeach
-                        </div>
-                        <br><br>
-                        <h1 class="text-center border-bottom-danger">Deactivate Slider Images</h1>
-                        <div class="row">
-
-                            @foreach($deactivates as $deactivate)
-                                <div class="col-4 mb-5">
-                                    <img class="h-100 w-100 rounded" src="{{ asset('storage').'/'.$deactivate->thumbnail }}" alt="Imgaes" height="200" width="200">
-                                    <a href="/admin/slider-image-activate/{{ $deactivate->id }}" class="btn btn-danger w-100">Activate</a>
-                                </div>
-                            @endforeach
-                        </div>
-                        <br><br>
-                    </div>
 
                 </div>
 
