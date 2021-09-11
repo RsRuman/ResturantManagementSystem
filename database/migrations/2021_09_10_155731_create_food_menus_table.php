@@ -17,6 +17,7 @@ class CreateFoodMenusTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('ingredients');
+            $table->string('category');
             $table->float('price');
             $table->string('thumbnail');
             $table->timestamps();

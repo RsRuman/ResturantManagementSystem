@@ -10,7 +10,7 @@
     <x-rms-qt :shortQuote="$shortQuote"></x-rms-qt>
 
     <!-- Start Menu -->
-    <x-rms-menu-box></x-rms-menu-box>
+    <x-rms-menu-box :foodItems="$foodItems" :drinks="$drinks" :lunches="$lunches" :dinners="$dinners"></x-rms-menu-box>
 
     <!-- Start Gallery -->
     <x-rms-gallary-box></x-rms-gallary-box>

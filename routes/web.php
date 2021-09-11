@@ -3,7 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\FoodMenu;
+use App\Http\Controllers\FoodMenuController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ReservationController;
@@ -11,6 +11,7 @@ use App\Http\Controllers\SocialLogin\FacebookLoginController;
 use App\Http\Controllers\SocialLogin\GithubLoginController;
 use App\Http\Controllers\SocialLogin\GoogleLoginController;
 use App\Http\Controllers\StuffController;
+use App\Models\foodMenu;
 use App\Models\Photo;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +22,11 @@ Route::get('/', function () {
     return view('welcome',[
         'photos' => Photo::latest()->where('status', 'activate')->get(),
         'shortStory' => Storage::get('shortStory.txt'),
-        'shortQuote' => Storage::get('shortQuote.txt')
+        'shortQuote' => Storage::get('shortQuote.txt'),
+        'foodItems' => foodMenu::latest()->get(),
+        'drinks' => foodMenu::latest()->where('category', 'drinks')->get(),
+        'lunches' => foodMenu::latest()->where('category', 'lunch')->get(),
+        'dinners' => foodMenu::latest()->where('category', 'dinner')->get()
     ]);
 });
 
@@ -64,9 +69,6 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 //Admin Dashboard Route
 Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('adminDashboard');
 
-//Admin Food Menus Dashboard Route
-Route::get('/admin-dashboard/food-menus', [FoodMenu::class, 'index'])->name('foodMenus');
-
 //Admin Slider Image Store Route
 Route::post('/admin/slider-image-store', [AdminController::class, 'sliderImageStore']);
 
@@ -81,3 +83,8 @@ Route::post('/admin/live-dinner-restaurant-short-story', [AdminController::class
 
 //Admin Slider Image Activate Route
 Route::post('/admin/live-dinner-restaurant-quote', [AdminController::class, 'shortQuote']);
+//Admin Food Menus Dashboard Route
+Route::get('/admin-food-menus', [FoodMenuController::class, 'index'])->name('foodMenus');
+
+//Admin Upload food Item Route
+Route::post('/admin/store-food', [FoodMenuController::class, 'storeFood']);

@@ -275,6 +275,64 @@
                 <!-- Content Row -->
                 <div class="row">
 
+                    <div class="col-4 border-right border-info">
+                        <h2 class="text-center">Upload New Food Item</h2>
+
+                        <form action="/admin/store-food" method="post" class="p-lg-3" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Food Item Name">
+                            </div>
+
+                            <div class="mb-3">
+                                <textarea class="form-control" id="ingredients" name="ingredients" rows="3" placeholder="Input Ingredients With Comma-separated Value"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <select name="category" class="form-select form-control" aria-label="Default select example">
+                                    <option selected>Select Category</option>
+                                    <option value="drinks">Drinks</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Price</span>
+                                <input type="text" id="price" name="price" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <span class="input-group-text">.00</span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="thumbnail" class="form-label">Upload Product Image</label>
+                                <input type="file" id="thumbnail" name="thumbnail">
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Upload</button>
+                        </form>
+
+                    </div>
+                    <div class="col-8">
+                        <h2 class="text-center">All Food Items</h2>
+
+                        <div class="row">
+
+                            @foreach($foodMenus as $foodMenu)
+                            <div class="col-lg-3 col-md-6 col-sm-">
+                                <img src="{{ 'storage'.'/'.$foodMenu->thumbnail }}" class="img-fluid" alt="Image">
+                                <div class="why-text h-auto">
+                                    <h4>{{ $foodMenu->name }}</h4>
+                                    <p>{{ $foodMenu->ingredients }}</p>
+                                    <h5> {{ $foodMenu->price }}.00 tk</h5>
+                                </div>
+                                <a href="#" class="btn btn-danger w-100 mb-3">Delete</a>
+                            </div>
+                            @endforeach
+
+                        </div>
+
+                    </div>
+                    </div>
 
                 </div>
 
