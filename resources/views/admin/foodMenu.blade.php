@@ -58,6 +58,18 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('galleryImages') }}" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Photo Gallery</span>
+            </a>
+
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
     </ul>
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">

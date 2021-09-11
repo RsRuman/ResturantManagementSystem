@@ -13,7 +13,7 @@
     <x-rms-menu-box :foodItems="$foodItems" :drinks="$drinks" :lunches="$lunches" :dinners="$dinners"></x-rms-menu-box>
 
     <!-- Start Gallery -->
-    <x-rms-gallary-box></x-rms-gallary-box>
+    <x-rms-gallary-box :galleryImages="$galleryImages"></x-rms-gallary-box>
 
     <!-- Start Customer Reviews -->
     <x-rms-review-box></x-rms-review-box>

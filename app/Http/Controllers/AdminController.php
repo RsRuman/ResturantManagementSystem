@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GalleryImage;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -68,5 +69,25 @@ class AdminController extends Controller
         Storage::disk('public')->put('shortQuote.txt',  $request->shortQuote);
 
         return redirect(route('adminDashboard'));
+    }
+
+    public function galleryImage(){
+
+        return view('admin.gallery',[
+            'galleryImages' => GalleryImage::latest()->get()
+        ]);
+    }
+
+    public function storeGalleryImage(Request $request){
+
+        $request->validate([
+           'thumbnail' => 'required'
+        ]);
+
+        GalleryImage::create([
+           'thumbnail' => $request->file('thumbnail')->store('galleryImages')
+        ]);
+
+        return redirect(route('galleryImages'));
     }
 }

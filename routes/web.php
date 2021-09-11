@@ -12,6 +12,7 @@ use App\Http\Controllers\SocialLogin\GithubLoginController;
 use App\Http\Controllers\SocialLogin\GoogleLoginController;
 use App\Http\Controllers\StuffController;
 use App\Models\foodMenu;
+use App\Models\GalleryImage;
 use App\Models\Photo;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,8 @@ Route::get('/', function () {
         'foodItems' => foodMenu::latest()->get(),
         'drinks' => foodMenu::latest()->where('category', 'drinks')->get(),
         'lunches' => foodMenu::latest()->where('category', 'lunch')->get(),
-        'dinners' => foodMenu::latest()->where('category', 'dinner')->get()
+        'dinners' => foodMenu::latest()->where('category', 'dinner')->get(),
+        'galleryImages' => GalleryImage::latest()->get()
     ]);
 });
 
@@ -88,3 +90,9 @@ Route::get('/admin-food-menus', [FoodMenuController::class, 'index'])->name('foo
 
 //Admin Upload food Item Route
 Route::post('/admin/store-food', [FoodMenuController::class, 'storeFood']);
+
+//Admin Gallery Images Route
+Route::get('/admin-gallery-images', [AdminController::class, 'galleryImage'])->name('galleryImages');
+
+//Admin Upload Gallery Images Route
+Route::post('/admin/store-gallery-images', [AdminController::class, 'storeGalleryImage']);
