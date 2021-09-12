@@ -14,6 +14,7 @@ use App\Http\Controllers\StuffController;
 use App\Models\foodMenu;
 use App\Models\GalleryImage;
 use App\Models\Photo;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +34,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    $userId = auth()->id();
+
+    return view('dashboard',[
+        'currentReservations' => Reservation::latest()->where('user_id', $userId)->where('status', 'activate')->get(),
+        'previousReservations' =>Reservation::latest()->where('user_id', $userId)->where('status', 'deactivate')->get(),
+    ]);
+
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
@@ -58,6 +66,9 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 //Reservation Route
 Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation');
+
+//Reservation Route
+Route::post('/reservation', [ReservationController::class, 'storeReservation']);
 
 //Stuff Route
 Route::get('/stuff', [StuffController::class, 'index'])->name('stuff');
