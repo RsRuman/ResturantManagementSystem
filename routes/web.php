@@ -11,10 +11,12 @@ use App\Http\Controllers\SocialLogin\FacebookLoginController;
 use App\Http\Controllers\SocialLogin\GithubLoginController;
 use App\Http\Controllers\SocialLogin\GoogleLoginController;
 use App\Http\Controllers\StuffController;
+use App\Models\CustomerReview;
 use App\Models\foodMenu;
 use App\Models\GalleryImage;
 use App\Models\Photo;
 use App\Models\Reservation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,6 +42,7 @@ Route::get('/dashboard', function () {
     return view('dashboard',[
         'currentReservations' => Reservation::latest()->where('user_id', $userId)->where('status', 'activate')->get(),
         'previousReservations' =>Reservation::latest()->where('user_id', $userId)->where('status', 'deactivate')->get(),
+        'hasNoReviewYet' => CustomerReview::where('user_id', $userId)->first()
     ]);
 
 })->middleware(['auth'])->name('dashboard');
@@ -107,3 +110,24 @@ Route::get('/admin-gallery-images', [AdminController::class, 'galleryImage'])->n
 
 //Admin Upload Gallery Images Route
 Route::post('/admin/store-gallery-images', [AdminController::class, 'storeGalleryImage']);
+
+//User reviews
+Route::post('/user-review', function (Request $request){
+    $userId = auth()->id();
+    $user = CustomerReview::where('user_id', $userId)->first();
+
+    $request->validate([
+        'review' => 'required|min:5|max:100',
+        'starRating' => 'required'
+    ]);
+
+    if(!$user){
+        CustomerReview::create([
+            'user_id' => $userId,
+            'rating' => $request->starRating,
+            'review' => $request->review
+        ]);
+    }
+
+    return redirect(route('dashboard'));
+});

@@ -6,6 +6,9 @@
     <!-- Site Icons -->
     <link rel="shortcut icon" href="{{ asset('/images/favicon.ico') }}" type="image/x-icon">
     <link rel="apple-touch-icon" href="{{ asset('/images/apple-touch-icon.png') }}">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
@@ -17,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
 
     <link rel="stylesheet" href="{{ asset('/css/myCustom.css') }}">
+
 </head>
 
 <body>

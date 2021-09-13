@@ -1,6 +1,12 @@
-@props(['currentReservations', 'previousReservations'])
+@props(['currentReservations', 'previousReservations', 'hasNoReviewYet'])
 <div style="padding: 150px 0 150px">
     <h1 class="bg-info p-4 text-center text-white">All Reservations</h1>
+    @if(!$hasNoReviewYet)
+    <x-rms-rating-modal></x-rms-rating-modal>
+    @endif
+
+
+
     <div class="container-fluid">
         <div class="row">
 
@@ -54,7 +60,7 @@
                         <div class="bg-info rounded text-white p-2">
                             <h2 class="text-center text-white">Reservation No. {{ $previousReservation->id }}</h2>
                             <div class="ml-0 mr-0 rounded row" style="background: #d65106">
-                                <p class="col-4 pt-3 text-center">Name: {{$previousReservation->cutomer_name}}</p>
+                                <p class="col-4 pt-3 text-center">Name: {{$previousReservation->customer_name}}</p>
                                 <p class="col-4 pt-3 text-center">Phone: {{ $previousReservation->customer_phone }}</p>
                                 <p class="col-4 pt-3 text-center">Date: {{ $previousReservation->date }}</p>
                             </div>
