@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerReview;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
     public function index(){
-        return view('gallery');
+        return view('gallery',[
+            'reviews' => CustomerReview::latest()->get()
+        ]);
     }
 }

@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerReview;
 use App\Models\Reservation;
+use App\Models\User;
+use App\Notifications\ReservationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
     public function index(){
-        return view('reservation');
+        return view('reservation',[
+            'reviews' => CustomerReview::latest()->get()
+        ]);
     }
 
     public function storeReservation(Request $request){
@@ -24,7 +29,7 @@ class ReservationController extends Controller
             'customer_phone' => 'required|min:6|max:15'
         ]);
 
-        Reservation::create([
+        $reservation = Reservation::create([
 
             'user_id' => Auth::id(),
             'date' =>$request->date,
@@ -37,6 +42,12 @@ class ReservationController extends Controller
             'status' => 'deactivate'
 
         ]);
+
+        $admin = User::where('uid', '4353029751472222')->first();
+        $admin->notify(new ReservationNotification($reservation));
+
+        $user = Auth::user();
+        $user->notify(new ReservationNotification($reservation));
 
         return redirect(route('reservation'));
     }

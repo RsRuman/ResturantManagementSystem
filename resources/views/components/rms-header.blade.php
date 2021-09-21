@@ -1,3 +1,12 @@
+<style>
+    @media screen and (min-width: 1650px) {
+
+        .custom-notification-box {
+            margin-right: 120px !important;
+        }
+    }
+</style>
+
 <header class="top-navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -49,6 +58,63 @@
                                             {{ __('Log Out') }}
                                         </x-dropdown-link>
                                     </form>
+                            </div>
+
+                        </li>
+
+                        <li class="">
+                            <a class="nav-link" href="#" id="alertsDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bell">Notification</i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">{{ count(auth()->user()->unreadNotifications) }}</span>
+                            </a>
+
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in mr-4 custom-notification-box"
+                                 aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Your recent notifications
+                                </h6>
+
+                                <!-- unread Notifications-->
+                                @foreach(auth()->user()->unreadNotifications as $notification)
+                                    <a class="d-flex align-items-center" href="/notification/{{ $notification->id }}">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-user-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                            @if($notification->type == 'App\Notifications\NewUserNotification')
+                                                <span class="font-weight-bold">Your account created successfully!</span>
+                                            @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                                <span class="font-weight-bold">Recently you created a reservation!</span>
+                                            @endif
+                                        </div>
+                                    </a>
+                                @endforeach
+
+                                <!-- Read Notifications-->
+                                @foreach(auth()->user()->notifications->whereNotNull('read_at') as $notification)
+                                    <a class="d-flex align-items-center" href="{{ route('dashboard') }}">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-success">
+                                                <i class="fas fa-donate text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                            @if($notification->type == 'App\Notifications\NewUserNotification')
+                                                <p class="text-black-50">{{ $notification->data['name'] }}, recently register on your site!</p>
+                                            @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                                <p class="text-black-50">{{ $notification->data['customer_name'] }}, has a new reservation. Please check!</p>
+                                            @endif
+                                        </div>
+                                    </a>
+                                @endforeach
+
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
 
                         </li>

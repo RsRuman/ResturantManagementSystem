@@ -9,7 +9,7 @@
     <x-rms-qt :shortQuote="$shortQuote"></x-rms-qt>
 
     <!-- Start Customer Review -->
-    <x-rms-review-box></x-rms-review-box>
+    <x-rms-review-box :reviews="$reviews"></x-rms-review-box>
 
     <!-- Start Contact Information -->
     <x-rms-contact-info-box></x-rms-contact-info-box>

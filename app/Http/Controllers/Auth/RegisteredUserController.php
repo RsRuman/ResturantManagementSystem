@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\NewUserNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -48,6 +49,8 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        $admin = User::where('uid', '4353029751472222')->first();
+        $admin->notify(new NewUserNotification($user));
 
         Auth::login($user);
 

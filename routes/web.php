@@ -16,7 +16,9 @@ use App\Models\foodMenu;
 use App\Models\GalleryImage;
 use App\Models\Photo;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,7 +33,8 @@ Route::get('/', function () {
         'drinks' => foodMenu::latest()->where('category', 'drinks')->get(),
         'lunches' => foodMenu::latest()->where('category', 'lunch')->get(),
         'dinners' => foodMenu::latest()->where('category', 'dinner')->get(),
-        'galleryImages' => GalleryImage::latest()->get()
+        'galleryImages' => GalleryImage::latest()->get(),
+        'reviews' => CustomerReview::latest()->get()
     ]);
 });
 
@@ -117,7 +120,7 @@ Route::post('/user-review', function (Request $request){
     $user = CustomerReview::where('user_id', $userId)->first();
 
     $request->validate([
-        'review' => 'required|min:5|max:100',
+        'review' => 'required|min:5|max:150',
         'starRating' => 'required'
     ]);
 
@@ -130,4 +133,18 @@ Route::post('/user-review', function (Request $request){
     }
 
     return redirect(route('dashboard'));
+});
+
+Route::get('/notification/{id}', function ($id){
+   $user = Auth::user();
+   $user->unreadNotifications->where('id', $id)->markAsRead();
+
+   return redirect( route('dashboard') );
+});
+
+Route::get('/admin/notification/{id}', function ($id){
+    $admin = Auth::user();
+    $admin->notifications->where('id', $id)->markAsRead();
+
+    return redirect( route('adminDashboard') );
 });

@@ -130,7 +130,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
+                            <span class="badge badge-danger badge-counter">{{ count(auth()->user()->notifications->where('read_at', null)) }}</span>
                         </a>
 
                         <!-- Dropdown - Alerts -->
@@ -139,17 +139,37 @@
                             <h6 class="dropdown-header">
                                 Alerts Center
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+
+                            <!-- Unread Notifications-->
+                            @foreach(auth()->user()->unreadNotifications->where('read_at', null) as $notification)
+
+                            <a class="dropdown-item d-flex align-items-center" href="/admin/notification/{{ $notification->id }}">
+                                @if($notification->type == 'App\Notifications\NewUserNotification')
                                 <div class="mr-3">
                                     <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                        <i class="fas fa-user-alt text-white"></i>
                                     </div>
                                 </div>
+                                @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-table text-white"></i>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                    @if($notification->type == 'App\Notifications\NewUserNotification')
+                                    <span class="font-weight-bold">{{ $notification->data['name'] }}, recently register on your site!</span>
+                                    @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                    <span class="font-weight-bold">{{ $notification->data['customer_name'] }}, has a new reservation. Please check!</span>
+                                    @endif
                                 </div>
                             </a>
+                            @endforeach
+
+                            <!-- Read Notifications-->
+                            @foreach(auth()->user()->notifications->whereNotNull('read_at') as $notification)
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="mr-3">
                                     <div class="icon-circle bg-success">
@@ -157,24 +177,19 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
+                                    <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                    @if($notification->type == 'App\Notifications\NewUserNotification')
+                                        {{ $notification->data['name'] }}, recently register on your site!
+                                    @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                        {{ $notification->data['customer_name'] }}, has a new reservation. Please check!
+                                    @endif
                                 </div>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
+                            @endforeach
                             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                         </div>
                     </li>
+
 
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
@@ -194,7 +209,7 @@
                             </h6>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                    <img class="rounded-circle" src="#"
                                          alt="...">
                                     <div class="status-indicator bg-success"></div>
                                 </div>
@@ -206,7 +221,7 @@
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                    <img class="rounded-circle" src="#"
                                          alt="...">
                                     <div class="status-indicator"></div>
                                 </div>
@@ -218,7 +233,7 @@
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                    <img class="rounded-circle" src="#"
                                          alt="...">
                                     <div class="status-indicator bg-warning"></div>
                                 </div>
@@ -252,7 +267,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">RS Ruman</span>
                             <img class="img-profile rounded-circle"
-                                 src="img/undraw_profile.svg">
+                                 src="https://www.facebook.com/photo/?fbid=3765358340239369&set=a.103284516446788">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

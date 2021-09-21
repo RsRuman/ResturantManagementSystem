@@ -16,7 +16,7 @@
     <x-rms-gallary-box :galleryImages="$galleryImages"></x-rms-gallary-box>
 
     <!-- Start Customer Reviews -->
-    <x-rms-review-box></x-rms-review-box>
+    <x-rms-review-box :reviews="$reviews"></x-rms-review-box>
 
     <!-- Start Contact Info -->
     <x-rms-contact-info-box></x-rms-contact-info-box>
