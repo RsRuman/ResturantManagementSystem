@@ -52,6 +52,9 @@ class RegisteredUserController extends Controller
         $admin = User::where('uid', '4353029751472222')->first();
         $admin->notify(new NewUserNotification($user));
 
+
+        $user->notify(new NewUserNotification($user));
+
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);

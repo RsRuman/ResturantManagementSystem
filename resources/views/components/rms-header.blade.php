@@ -87,7 +87,11 @@
                                         <div>
                                             <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
                                             @if($notification->type == 'App\Notifications\NewUserNotification')
-                                                <span class="font-weight-bold">Your account created successfully!</span>
+                                                @if($notification->notifiable_id == 13)
+                                                <span class="font-weight-bold">{{ $notification->data['name'] }}. has recently registered on your site!</span>
+                                                @else
+                                                    <span class="font-weight-bold">Your account created successfully!</span>
+                                                @endif
                                             @elseif($notification->type == 'App\Notifications\ReservationNotification')
                                                 <span class="font-weight-bold">Recently you created a reservation!</span>
                                             @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')

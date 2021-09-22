@@ -52,74 +52,69 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-//Github login
+//Social login
+
+// GitHub login
 Route::get('/auth/github', [GithubLoginController::class, 'redirectToProvider']);
 Route::get('/auth/github/callback', [GithubLoginController::class, 'handleProviderCallback']);
-
 //Facebook login
 Route::get('/auth/facebook', [FacebookLoginController::class, 'redirectToProvider']);
 Route::get('/auth/facebook/callback', [FacebookLoginController::class, 'handleProviderCallback']);
-
 //Facebook login
 Route::get('/auth/google', [GoogleLoginController::class, 'redirectToProvider']);
 Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleProviderCallback']);
 
+//End Social login
+
+//User routes
+
 //Menu Route
 Route::get('/menu', [MenuController::class, 'index'])->name('menu');
-
 //About Route
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-
 //Reservation Route
 Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation');
-
 //Reservation Route
 Route::post('/reservation', [ReservationController::class, 'storeReservation']);
-
 //Stuff Route
 Route::get('/stuff', [StuffController::class, 'index'])->name('stuff');
-
 //Gallery Route
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
-
 //Contact Route
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
+//End user routes
+
+//Admin Routes
+
 //Admin Dashboard Route
-Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('adminDashboard')->middleware('auth');
-
+Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('adminDashboard')->middleware('admin');
 //Admin Slider Image Store Route
-Route::post('/admin/slider-image-store', [AdminController::class, 'sliderImageStore']);
-
+Route::post('/admin/slider-image-store', [AdminController::class, 'sliderImageStore'])->middleware('admin');
 //Admin Slider Image Deactivate Route
-Route::get('/admin/slider-image-deactivate/{photo}', [AdminController::class, 'sliderImageDeactivate']);
-
+Route::get('/admin/slider-image-deactivate/{photo}', [AdminController::class, 'sliderImageDeactivate'])->middleware('admin');
 //Admin Slider Image Activate Route
-Route::get('/admin/slider-image-activate/{photo}', [AdminController::class, 'sliderImageActivate']);
-
+Route::get('/admin/slider-image-activate/{photo}', [AdminController::class, 'sliderImageActivate'])->middleware('admin');
 //Admin Slider Image Activate Route
-Route::post('/admin/live-dinner-restaurant-short-story', [AdminController::class, 'shortStory']);
-
+Route::post('/admin/live-dinner-restaurant-short-story', [AdminController::class, 'shortStory'])->middleware('admin');
 //Admin Slider Image Activate Route
-Route::post('/admin/live-dinner-restaurant-quote', [AdminController::class, 'shortQuote']);
+Route::post('/admin/live-dinner-restaurant-quote', [AdminController::class, 'shortQuote'])->middleware('admin');
 //Admin Food Menus Dashboard Route
-Route::get('/admin-food-menus', [FoodMenuController::class, 'index'])->name('foodMenus');
-
+Route::get('/admin-food-menus', [FoodMenuController::class, 'index'])->name('foodMenus')->middleware('admin');
 //Admin Upload food Item Route
-Route::post('/admin/store-food', [FoodMenuController::class, 'storeFood']);
-
+Route::post('/admin/store-food', [FoodMenuController::class, 'storeFood'])->middleware('admin');
 //Admin Gallery Images Route
-Route::get('/admin-gallery-images', [AdminController::class, 'galleryImage'])->name('galleryImages');
-
+Route::get('/admin-gallery-images', [AdminController::class, 'galleryImage'])->name('galleryImages')->middleware('admin');
 //Admin Upload Gallery Images Route
-Route::post('/admin/store-gallery-images', [AdminController::class, 'storeGalleryImage']);
+Route::post('/admin/store-gallery-images', [AdminController::class, 'storeGalleryImage'])->middleware('admin');
+//Customers Reservation Route
+Route::get('/admin/customers-reservation', [AdminController::class, 'showReservation'])->name('customersReservation')->middleware('admin');
+//Active reservation Route
+Route::get('/activate-reservation/user/{userId}/reservation/{id}', [AdminController::class, 'activateReservation'])->middleware('admin');
+//Stuff management Route
+Route::get('/admin/stuff-management', [AdminController::class, 'showStuff'])->name('stuffManagement')->middleware('admin');
 
-//All Customer Reservation Route
-Route::get('/admin/customers-reservation', [AdminController::class, 'showReservation'])->name('customersReservation');
-Route::get('/activate-reservation/user/{userId}/reservation/{id}', [AdminController::class, 'activateReservation']);
-
-
-Route::get('/admin/stuff-management', [AdminController::class, 'showStuff'])->name('stuffManagement');
+//End admin Routes
 
 //User reviews
 Route::post('/user-review', function (Request $request){
@@ -158,5 +153,9 @@ Route::get('/admin/notification/{id}', function ($id){
 
 
 Route::get('/testing', function (){
-    dd(User::where('uid', '104468164800649692111')->first());
+    $user = auth()->user();
+    foreach ($user->unreadNotifications as $notification) {
+        dd ($notification->notifiable_id);
+    }
+
 });
