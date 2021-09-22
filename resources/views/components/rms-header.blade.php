@@ -90,6 +90,8 @@
                                                 <span class="font-weight-bold">Your account created successfully!</span>
                                             @elseif($notification->type == 'App\Notifications\ReservationNotification')
                                                 <span class="font-weight-bold">Recently you created a reservation!</span>
+                                            @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')
+                                                <span class="font-weight-bold">Your recent reservation id - {{ $notification->data['reservation_id'] }} is Activate!</span>
                                             @endif
                                         </div>
                                     </a>

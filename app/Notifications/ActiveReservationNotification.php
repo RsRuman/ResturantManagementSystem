@@ -2,21 +2,21 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
+use App\Models\Reservation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewUserNotification extends Notification
+class ActiveReservationNotification extends Notification
 {
     use Queueable;
 
-    private $user;
+    private $reservation;
 
-    public function __construct(User $user)
+    public function __construct(Reservation $reservation)
     {
-        $this->user = $user;
+        $this->reservation = $reservation;
     }
 
 
@@ -25,10 +25,14 @@ class NewUserNotification extends Notification
         return ['database'];
     }
 
+
+
     public function toArray($notifiable)
     {
         return [
-            'name' => $this->user->name
+            'user_id' => $this->reservation->user_id,
+            'reservation_id' => $this->reservation->id,
+            'customer_name' => $this->reservation->customer_name,
         ];
     }
 }

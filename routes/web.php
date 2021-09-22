@@ -86,7 +86,7 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
 //Admin Dashboard Route
-Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('adminDashboard');
+Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('adminDashboard')->middleware('auth');
 
 //Admin Slider Image Store Route
 Route::post('/admin/slider-image-store', [AdminController::class, 'sliderImageStore']);
@@ -114,6 +114,13 @@ Route::get('/admin-gallery-images', [AdminController::class, 'galleryImage'])->n
 //Admin Upload Gallery Images Route
 Route::post('/admin/store-gallery-images', [AdminController::class, 'storeGalleryImage']);
 
+//All Customer Reservation Route
+Route::get('/admin/customers-reservation', [AdminController::class, 'showReservation'])->name('customersReservation');
+Route::get('/activate-reservation/user/{userId}/reservation/{id}', [AdminController::class, 'activateReservation']);
+
+
+Route::get('/admin/stuff-management', [AdminController::class, 'showStuff'])->name('stuffManagement');
+
 //User reviews
 Route::post('/user-review', function (Request $request){
     $userId = auth()->id();
@@ -140,11 +147,16 @@ Route::get('/notification/{id}', function ($id){
    $user->unreadNotifications->where('id', $id)->markAsRead();
 
    return redirect( route('dashboard') );
-});
+})->middleware('auth');
 
 Route::get('/admin/notification/{id}', function ($id){
     $admin = Auth::user();
     $admin->notifications->where('id', $id)->markAsRead();
 
     return redirect( route('adminDashboard') );
+})->middleware('auth');
+
+
+Route::get('/testing', function (){
+    dd(User::where('uid', '104468164800649692111')->first());
 });

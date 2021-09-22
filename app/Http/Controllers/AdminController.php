@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\GalleryImage;
 use App\Models\Photo;
+use App\Models\Reservation;
+use App\Models\User;
+use App\Notifications\ActiveReservationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -90,4 +93,32 @@ class AdminController extends Controller
 
         return redirect(route('galleryImages'));
     }
+
+    public function showReservation(){
+        return view('admin.reservation', [
+            'activateReservations' => Reservation::all()->where('status', 'activate'),
+            'deactivateReservations' => Reservation::all()->where('status', 'deactivate')
+        ]);
+    }
+
+    public function activateReservation($userId, $id)
+    {
+
+        $reservation = Reservation::find($id);
+        $reservation->status = "activate";
+        $reservation->save();
+
+        $admin = User::where('uid', '4353029751472222')->first();
+        $admin->notify(new ActiveReservationNotification($reservation));
+
+        $user = User::find($userId);
+        $user->notify(new ActiveReservationNotification($reservation));
+
+        return redirect(route('customersReservation'));
+    }
+
+    public function showStuff(){
+        return view('admin.stuff');
+    }
+
 }

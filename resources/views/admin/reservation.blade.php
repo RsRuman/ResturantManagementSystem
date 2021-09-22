@@ -99,7 +99,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
         <div id="content">
-            <!-- Top bar -->
+            <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                 <!-- Sidebar Toggle (Top bar) -->
@@ -107,7 +107,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <!-- Top bar Search -->
+                <!-- Topbar Search -->
                 <form
                     class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
@@ -154,7 +154,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
+                            <span class="badge badge-danger badge-counter">{{ count(auth()->user()->notifications->where('read_at', null)) }}</span>
                         </a>
 
                         <!-- Dropdown - Alerts -->
@@ -163,42 +163,67 @@
                             <h6 class="dropdown-header">
                                 Alerts Center
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+
+                            <!-- Unread Notifications-->
+                            @foreach(auth()->user()->unreadNotifications->where('read_at', null) as $notification)
+
+                                <a class="dropdown-item d-flex align-items-center" href="/admin/notification/{{ $notification->id }}">
+                                    @if($notification->type == 'App\Notifications\NewUserNotification')
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-user-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                    @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-table text-white"></i>
+                                            </div>
+                                        </div>
+                                    @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-table text-white"></i>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                        @if($notification->type == 'App\Notifications\NewUserNotification')
+                                            <span class="font-weight-bold">{{ $notification->data['name'] }}, recently register on your site!</span>
+                                        @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                            <span class="font-weight-bold">{{ $notification->data['customer_name'] }}, has a new reservation. Please check!</span>
+                                        @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')
+                                            <span class="font-weight-bold">Reservation id {{ $notification->data['reservation_id'] }}, has recently activated!</span>
+                                        @endif
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
+                                </a>
+                            @endforeach
+
+                        <!-- Read Notifications-->
+                            @foreach(auth()->user()->notifications->whereNotNull('read_at') as $notification)
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    <div>
+                                        <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                        @if($notification->type == 'App\Notifications\NewUserNotification')
+                                            {{ $notification->data['name'] }}, recently register on your site!
+                                        @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                            {{ $notification->data['customer_name'] }}, has a new reservation. Please check!
+                                        @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')
+                                            Reservation id {{ $notification->data['reservation_id'] }}, has recently activated!
+                                        @endif
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
+                                </a>
+                            @endforeach
                             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                         </div>
                     </li>
+
 
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
@@ -276,7 +301,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">RS Ruman</span>
                             <img class="img-profile rounded-circle"
-                                 src="#">
+                                 src="https://www.facebook.com/photo/?fbid=3765358340239369&set=a.103284516446788">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -300,7 +325,7 @@
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Food Menu</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Customer Reservation</h1>
                     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                 </div>
@@ -308,68 +333,72 @@
                 <!-- ################################################################################################################# -->
                 <!-- ################################################################################################################# -->
 
-                <!-- Content Row -->
                 <div class="row">
 
-                    <div class="col-4 border-right border-info">
-                        <h2 class="text-center">Upload New Food Item</h2>
-
-                        <form action="/admin/store-food" method="post" class="p-lg-3" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Food Item Name">
-                            </div>
-
-                            <div class="mb-3">
-                                <textarea class="form-control" id="ingredients" name="ingredients" rows="3" placeholder="Input Ingredients With Comma-separated Value"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <select name="category" class="form-select form-control" aria-label="Default select example">
-                                    <option selected>Select Category</option>
-                                    <option value="drinks">Drinks</option>
-                                    <option value="lunch">Lunch</option>
-                                    <option value="dinner">Dinner</option>
-                                </select>
-                            </div>
-
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Price</span>
-                                <input type="text" id="price" name="price" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                <span class="input-group-text">.00</span>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="thumbnail" class="form-label">Upload Product Image</label>
-                                <input type="file" id="thumbnail" name="thumbnail">
-                            </div>
-
-                            <button class="btn btn-primary" type="submit">Upload</button>
-                        </form>
-
-                    </div>
-                    <div class="col-8">
-                        <h2 class="text-center">All Food Items</h2>
-
+                    <!-- Activate Reservation -->
+                    <div class="col-6">
                         <div class="row">
+                            <h1 class="text-center">All Activated Reservation</h1>
+                            @foreach($activateReservations as $activateReservation)
+                            <div class="col-lg-6">
+                                <!-- Current Reservation -->
+                                    <div class="bg-success rounded text-white p-2 mb-2">
+                                        <h2 class="text-center text-white">Reservation No. {{ $activateReservation->id }}</h2>
+                                        <div class="ml-0 mr-0 rounded row" style="background: #d65106">
+                                            <p class="col-4 pt-3 text-center"><i class="fas fa-user"></i> {{ $activateReservation->customer_name }}</p>
+                                            <p class="col-4 pt-3 text-center">Phone: {{ $activateReservation->customer_phone }}</p>
+                                            <p class="col-4 pt-3 text-center">Date: {{ $activateReservation->date }}</p>
+                                        </div>
 
-                            @foreach($foodMenus as $foodMenu)
-                            <div class="col-lg-3 col-md-6 col-sm-">
-                                <img src="{{ 'storage'.'/'.$foodMenu->thumbnail }}" class="img-fluid" alt="Image">
-                                <div class="why-text h-auto">
-                                    <h4>{{ $foodMenu->name }}</h4>
-                                    <p>{{ $foodMenu->ingredients }}</p>
-                                    <h5> {{ $foodMenu->price }}.00 tk</h5>
-                                </div>
-                                <a href="#" class="btn btn-danger w-100 mb-3">Delete</a>
+                                        <div class="bg-white text-dark ml-0 mr-0 rounded row">
+                                            <p class="col-4 pt-3 text-center">Time: From <span>{{ $activateReservation->from }}</span> To <span>{{ $activateReservation->to }}</span></p>
+                                            <p class="col-4 pt-3 text-center">Number Of Person: {{ $activateReservation->number_of_person }}</p>
+                                            <p class="col-4 pt-3 text-center">Status: {{ $activateReservation->status }}<span class="text-success"></span></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mb-2">
+                                        <a href="#" class="btn btn-info">Update</a>
+                                        <a href="#" class="btn btn-danger">Delete</a>
+                                    </div>
+                                <!-- End Current Reservation -->
                             </div>
                             @endforeach
-
                         </div>
 
                     </div>
-                    </div>
 
+                    <!-- Deactivate Reservation -->
+                    <div class="col-6">
+                        <h1 class="text-center">All Deactivated Reservation</h1>
+                        <!-- Previous Reservation -->
+                        <div class="row">
+
+                            @foreach($deactivateReservations as $deactivateReservation)
+                                <div class="col-lg-6">
+                                    <div class="bg-info rounded text-white p-2 mb-2">
+                                        <h2 class="text-center text-white">Reservation No. {{ $deactivateReservation->id }}</h2>
+                                        <div class="ml-0 mr-0 rounded row" style="background: #d65106">
+                                            <p class="col-4 pt-3 text-center"><i class="fas fa-user"></i> {{ $deactivateReservation->customer_name }}</p>
+                                            <p class="col-4 pt-3 text-center">Phone: {{ $deactivateReservation->customer_phone }}</p>
+                                            <p class="col-4 pt-3 text-center">Date: {{ $deactivateReservation->date }}</p>
+                                        </div>
+                                        <div class="bg-white text-dark ml-0 mr-0 rounded row">
+                                            <p class="col-4 pt-3 text-center">Time: From <span>{{ $deactivateReservation->from }}</span> To <span>{{ $deactivateReservation->to }}</span></p>
+                                            <p class="col-4 pt-3 text-center">Number Of Person: </p>
+                                            <p class="col-4 pt-3 text-center">Status: <span class="text-success">{{ $deactivateReservation->status }}</span></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mb-2">
+                                        <a href="/activate-reservation/user/{{ $deactivateReservation->user_id }}/reservation/{{ $deactivateReservation->id }}" class="btn btn-success">Activate</a>
+                                        <a href="#" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <!-- End Previous Reservation -->
+                        </div>
+                    </div>
                 </div>
 
                 <!-- ################################################################################################################# -->
