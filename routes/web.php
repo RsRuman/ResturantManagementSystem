@@ -103,14 +103,20 @@ Route::post('/admin/live-dinner-restaurant-quote', [AdminController::class, 'sho
 Route::get('/admin-food-menus', [FoodMenuController::class, 'index'])->name('foodMenus')->middleware('admin');
 //Admin Upload food Item Route
 Route::post('/admin/store-food', [FoodMenuController::class, 'storeFood'])->middleware('admin');
+//Admin Delete food Item Route
+Route::get('/admin/delete/food-item/{foodMenu}', [FoodMenuController::class, 'deleteFood'])->middleware('admin');
 //Admin Gallery Images Route
 Route::get('/admin-gallery-images', [AdminController::class, 'galleryImage'])->name('galleryImages')->middleware('admin');
 //Admin Upload Gallery Images Route
 Route::post('/admin/store-gallery-images', [AdminController::class, 'storeGalleryImage'])->middleware('admin');
+//Admin Delete Gallery Images Route
+Route::get('/admin/store-gallery-images/{id}', [AdminController::class, 'deleteGalleryImage'])->middleware('admin');
 //Customers Reservation Route
 Route::get('/admin/customers-reservation', [AdminController::class, 'showReservation'])->name('customersReservation')->middleware('admin');
 //Active reservation Route
 Route::get('/activate-reservation/user/{userId}/reservation/{id}', [AdminController::class, 'activateReservation'])->middleware('admin');
+//Delete Reservation Route
+Route::get('/admin/customers-reservation/delete/{reservation}', [AdminController::class, 'deleteReservation'])->middleware('admin');
 //Stuff management Route
 Route::get('/admin/stuff-management', [AdminController::class, 'showStuff'])->name('stuffManagement')->middleware('admin');
 

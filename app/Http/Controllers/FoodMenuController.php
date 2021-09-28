@@ -10,7 +10,7 @@ class FoodMenuController extends Controller
     public function index(){
 
         return view('admin.foodMenu',[
-            'foodMenus' => foodMenu::latest()->get()
+            'foodMenus' => foodMenu::latest()->get(),
         ]);
     }
 
@@ -35,5 +35,11 @@ class FoodMenuController extends Controller
         ]);
 
         return redirect(route('foodMenus'));
+    }
+
+    public function deleteFood(foodMenu $foodMenu){
+        $foodMenu->delete();
+
+        return redirect(route('foodMenus'))->with('success', 'Food Item Deleted Successfully!');
     }
 }

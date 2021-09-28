@@ -94,6 +94,13 @@ class AdminController extends Controller
         return redirect(route('galleryImages'));
     }
 
+    public function deleteGalleryImage($id){
+        $image = GalleryImage::find($id);
+        $image->delete();
+
+        return redirect(route('galleryImages'))->with('success', 'Gallery Image Deleted Successfully!');
+    }
+
     public function showReservation(){
         return view('admin.reservation', [
             'activateReservations' => Reservation::all()->where('status', 'activate'),
@@ -115,6 +122,11 @@ class AdminController extends Controller
         $user->notify(new ActiveReservationNotification($reservation));
 
         return redirect(route('customersReservation'));
+    }
+
+    public function deleteReservation(Reservation $reservation){
+        $reservation->delete();
+        return redirect(route('customersReservation'))->with('success', 'Reservation Deleted Successfully!');
     }
 
     public function showStuff(){

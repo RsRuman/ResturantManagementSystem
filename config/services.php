@@ -39,7 +39,7 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/auth/facebook/callback',
+        'redirect' => 'https://phplaravel-666090-2179959.cloudwaysapps.com/auth/facebook/callback',
     ],
 
     'google' => [

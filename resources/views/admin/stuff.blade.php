@@ -317,8 +317,9 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Stuff Management</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    @if(session('success'))
+                        <div id="customSuccess" class="alert bg-success text-white" role="alert"> {{ session('success') }}</div>
+                    @endif
                 </div>
 
                 <!-- ################################################################################################################# -->
@@ -347,7 +348,12 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('js/admin/sb-admin-2.min.js') }}"></script>
-
+<script>
+    var hide = document.querySelector("#customSuccess");
+    setTimeout(function (){
+        hide.style.display = "none";
+    },2000);
+</script>
 
 </body>
 

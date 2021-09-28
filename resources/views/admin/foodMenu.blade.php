@@ -154,7 +154,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
+                            <span class="badge badge-danger badge-counter">{{ count(auth()->user()->notifications->where('read_at', null)) }}</span>
                         </a>
 
                         <!-- Dropdown - Alerts -->
@@ -163,39 +163,63 @@
                             <h6 class="dropdown-header">
                                 Alerts Center
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+
+                            <!-- Unread Notifications-->
+                            @foreach(auth()->user()->unreadNotifications->where('read_at', null) as $notification)
+
+                                <a class="dropdown-item d-flex align-items-center" href="/admin/notification/{{ $notification->id }}">
+                                    @if($notification->type == 'App\Notifications\NewUserNotification')
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-user-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                    @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-table text-white"></i>
+                                            </div>
+                                        </div>
+                                    @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-table text-white"></i>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                        @if($notification->type == 'App\Notifications\NewUserNotification')
+                                            <span class="font-weight-bold">{{ $notification->data['name'] }}, recently register on your site!</span>
+                                        @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                            <span class="font-weight-bold">{{ $notification->data['customer_name'] }}, has a new reservation. Please check!</span>
+                                        @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')
+                                            <span class="font-weight-bold">Reservation id {{ $notification->data['reservation_id'] }}, has recently activated!</span>
+                                        @endif
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
+                                </a>
+                            @endforeach
+
+                        <!-- Read Notifications-->
+                            @foreach(auth()->user()->notifications->whereNotNull('read_at') as $notification)
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    <div>
+                                        <div class="small text-gray-500">{{ $notification->created_at->diffForHumans() }}</div>
+                                        @if($notification->type == 'App\Notifications\NewUserNotification')
+                                            {{ $notification->data['name'] }}, recently register on your site!
+                                        @elseif($notification->type == 'App\Notifications\ReservationNotification')
+                                            {{ $notification->data['customer_name'] }}, has a new reservation. Please check!
+                                        @elseif($notification->type == 'App\Notifications\ActiveReservationNotification')
+                                            Reservation id {{ $notification->data['reservation_id'] }}, has recently activated!
+                                        @endif
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
+                                </a>
+                            @endforeach
                             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                         </div>
                     </li>
@@ -301,8 +325,9 @@
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Food Menu</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    @if(session('success'))
+                    <div id="customSuccess" class="alert bg-success text-white" role="alert"> {{ session('success') }}</div>
+                    @endif
                 </div>
 
                 <!-- ################################################################################################################# -->
@@ -361,7 +386,7 @@
                                     <p>{{ $foodMenu->ingredients }}</p>
                                     <h5> {{ $foodMenu->price }}.00 tk</h5>
                                 </div>
-                                <a href="#" class="btn btn-danger w-100 mb-3">Delete</a>
+                                <a href="/admin/delete/food-item/{{ $foodMenu->id }}" class="btn btn-danger w-100 mb-3">Delete</a>
                             </div>
                             @endforeach
 
@@ -395,7 +420,12 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('js/admin/sb-admin-2.min.js') }}"></script>
-
+<script>
+    var hide = document.querySelector("#customSuccess");
+     setTimeout(function (){
+        hide.style.display = "none";
+    },2000);
+</script>
 
 </body>
 
